@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using Bunkum.CustomHttpListener.Parsing;
 using Bunkum.HttpServer;
 using Bunkum.HttpServer.Endpoints;
+using Bunkum.ProfanityFilter;
 using Newtonsoft.Json;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Services;
@@ -131,13 +132,16 @@ public class UserEndpoints : EndpointGroup
     /// <param name="context">The request context.</param>
     /// <param name="body">The string to censor.</param>
     /// <param name="user">The user saying the string. Used for logging</param>
+    /// <param name="profanity">The profanity service.</param>
     /// <returns>The string shown in-game.</returns>
     [GameEndpoint("filter", Method.Post)]
     [AllowEmptyBody]
-    public string Filter(RequestContext context, string body, GameUser user)
+    public string Filter(RequestContext context, string body, GameUser user, ProfanityService profanity)
     {
         Debug.Assert(user != null);
         Debug.Assert(body != null);
+
+        body = profanity.CensorSentence(body);
         
         string msg = $"<{user}>: {body}"; // For some reason, the logger breaks if we put this directly into the call
         try

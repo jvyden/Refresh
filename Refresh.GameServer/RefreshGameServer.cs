@@ -5,6 +5,7 @@ using Bunkum.HttpServer;
 using Bunkum.HttpServer.Authentication;
 using Bunkum.HttpServer.RateLimit;
 using Bunkum.HttpServer.Storage;
+using Bunkum.ProfanityFilter;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Database;
@@ -69,6 +70,7 @@ public class RefreshGameServer
         this._server.AddService<CategoryService>();
         this._server.AddService<FriendStorageService>();
         this._server.AddService<MatchService>();
+        this._server.AddProfanityService();
     }
 
     public Task StartAndBlockAsync()
