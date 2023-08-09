@@ -6,6 +6,7 @@ using Refresh.GameServer.Database;
 using Refresh.GameServer.Endpoints.ApiV3.ApiTypes;
 using Refresh.GameServer.Endpoints.ApiV3.DataTypes.Response;
 using Refresh.GameServer.Services;
+using Refresh.GameServer.Types.RichPresence;
 
 namespace Refresh.GameServer.Endpoints.ApiV3;
 
@@ -36,6 +37,7 @@ public class InstanceApiEndpoints : EndpointGroup
             MaximumAssetSafetyLevel = config.MaximumAssetSafetyLevel,
             Announcements = ApiGameAnnouncementResponse.FromOldList(database.GetAnnouncements()),
             MaintenanceModeEnabled = config.MaintenanceMode,
+            RichPresenceConfiguration = RichPresenceConfiguration.Create(config),
 
 #if DEBUG
             SoftwareType = "Debug",
