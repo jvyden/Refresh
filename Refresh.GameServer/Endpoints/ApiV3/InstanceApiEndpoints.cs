@@ -26,18 +26,21 @@ public class InstanceApiEndpoints : EndpointGroup
     
     [ApiV3Endpoint("instance"), Authentication(false), AllowDuringMaintenance]
     [DocSummary("Retrieves various information and metadata about the Refresh instance.")]
-    public ApiResponse<ApiInstanceResponse> GetInstanceInformation(RequestContext context, GameServerConfig config, GameDatabaseContext database) 
+    public ApiResponse<ApiInstanceResponse> GetInstanceInformation(RequestContext context,
+        GameServerConfig gameConfig,
+        RichPresenceConfig richConfig,
+        GameDatabaseContext database) 
         => new ApiInstanceResponse
         {
-            InstanceName = config.InstanceName,
-            InstanceDescription = config.InstanceDescription,
-            RegistrationEnabled = config.RegistrationEnabled,
+            InstanceName = gameConfig.InstanceName,
+            InstanceDescription = gameConfig.InstanceDescription,
+            RegistrationEnabled = gameConfig.RegistrationEnabled,
             SoftwareName = "Refresh",
             SoftwareVersion = "0.0.0", // TODO: Implement software version
-            MaximumAssetSafetyLevel = config.MaximumAssetSafetyLevel,
+            MaximumAssetSafetyLevel = gameConfig.MaximumAssetSafetyLevel,
             Announcements = ApiGameAnnouncementResponse.FromOldList(database.GetAnnouncements()),
-            MaintenanceModeEnabled = config.MaintenanceMode,
-            RichPresenceConfiguration = RichPresenceConfiguration.Create(config),
+            MaintenanceModeEnabled = gameConfig.MaintenanceMode,
+            RichPresenceConfiguration = RichPresenceConfiguration.Create(gameConfig, richConfig),
 
 #if DEBUG
             SoftwareType = "Debug",

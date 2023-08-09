@@ -15,8 +15,8 @@ namespace Refresh.GameServer.Endpoints.LegacyApi;
 public class LegacyApiEndpoints : EndpointGroup
 {
     [LegacyApiEndpoint("rpc"), Authentication(false)]
-    public RichPresenceConfiguration GetRichPresenceConfiguration(RequestContext context, GameServerConfig config)
-        => RichPresenceConfiguration.Create(config, true);
+    public RichPresenceConfiguration GetRichPresenceConfiguration(RequestContext context, GameServerConfig gameConfig, RichPresenceConfig richConfig)
+        => RichPresenceConfiguration.Create(gameConfig, richConfig, true);
 
     [LegacyApiEndpoint("username/{username}")]
     [Authentication(false)]

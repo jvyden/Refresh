@@ -11,14 +11,17 @@ public class RichPresenceConfiguration : IApiResponse
     public required RichPresenceUsernameResponseType UsernameType { get; set; }
     public required RichPresenceAssetConfiguration AssetConfiguration { get; set; }
 
-    public static RichPresenceConfiguration Create(GameServerConfig config, bool legacy = false)
+    public static RichPresenceConfiguration Create(GameServerConfig gameConfig, RichPresenceConfig richConfig, bool legacy = false)
     {
         return new RichPresenceConfiguration
         {
             ApplicationId = -1,
-            AssetConfiguration = new RichPresenceAssetConfiguration(), // TODO: ability to configure this
+            AssetConfiguration = new RichPresenceAssetConfiguration()
+            {
+                
+            },
             UsernameType = legacy ? RichPresenceUsernameResponseType.Username : RichPresenceUsernameResponseType.UserId,
-            PartyIdPrefix = config.InstanceName.Replace(' ', '_'),
+            PartyIdPrefix = gameConfig.InstanceName.Replace(' ', '_'),
         };
     }
 }
