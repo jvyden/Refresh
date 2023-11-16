@@ -48,8 +48,6 @@ public class ResourceEndpoints : EndpointGroup
         GameAsset? gameAsset = importer.ReadAndVerifyAsset(hash, body, token.TokenPlatform);
         if (gameAsset == null)
             return BadRequest;
-
-        gameAsset.UploadDate = DateTimeOffset.FromUnixTimeSeconds(Math.Clamp(gameAsset.UploadDate.ToUnixTimeSeconds(), timeProvider.EarliestDate, timeProvider.TimestampSeconds));
        
         // Dont block any assets uploaded from PSP, and block any unwanted assets,
         // for example, if asset safety level is Dangerous (2) and maximum is configured as Safe (0), return 401
