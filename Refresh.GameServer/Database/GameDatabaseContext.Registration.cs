@@ -26,7 +26,7 @@ public partial class GameDatabaseContext // Registration
             Username = username,
             EmailAddress = emailAddress,
             EmailAddressVerified = false,
-            JoinDate = this._time.Now,
+            JoinDate = this._time.GetUtcNow(),
         };
 
         this._realm.Write(() =>
@@ -94,7 +94,7 @@ public partial class GameDatabaseContext // Registration
             Username = username,
             EmailAddress = emailAddress,
             PasswordBcrypt = passwordBcrypt,
-            ExpiryDate = this._time.Now + TimeSpan.FromDays(1), // This registration expires in 1 day
+            ExpiryDate = this._time.GetUtcNow() + TimeSpan.FromDays(1), // This registration expires in 1 day
         };
 
         this._realm.Write(() =>
@@ -119,7 +119,7 @@ public partial class GameDatabaseContext // Registration
         });
     }
     
-    public bool IsRegistrationExpired(QueuedRegistration registration) => registration.ExpiryDate < this._time.Now;
+    public bool IsRegistrationExpired(QueuedRegistration registration) => registration.ExpiryDate < this._time.GetUtcNow();
 
     public QueuedRegistration? GetQueuedRegistrationByUsername(string username) 
         => this._realm.All<QueuedRegistration>().FirstOrDefault(q => q.Username == username);
@@ -147,7 +147,7 @@ public partial class GameDatabaseContext // Registration
     public bool VerificationCodeMatches(GameUser user, string code) => 
         this._realm.All<EmailVerificationCode>().Any(c => c.User == user && c.Code == code);
     
-    public bool IsVerificationCodeExpired(EmailVerificationCode code) => code.ExpiryDate < this._time.Now;
+    public bool IsVerificationCodeExpired(EmailVerificationCode code) => code.ExpiryDate < this._time.GetUtcNow();
 
     private static string GenerateDigitCode()
     {
@@ -173,7 +173,7 @@ public partial class GameDatabaseContext // Registration
         {
             User = user,
             Code = GenerateDigitCode(),
-            ExpiryDate = this._time.Now + TimeSpan.FromDays(1),
+            ExpiryDate = this._time.GetUtcNow() + TimeSpan.FromDays(1),
         };
 
         this._realm.Write(() =>

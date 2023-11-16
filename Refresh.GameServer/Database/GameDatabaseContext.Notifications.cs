@@ -18,7 +18,7 @@ public partial class GameDatabaseContext // Notifications
             Text = text,
             User = user,
             FontAwesomeIcon = icon,
-            CreatedAt = this._time.Now,
+            CreatedAt = this._time.GetUtcNow(),
         };
 
         this._realm.Write(() =>
@@ -84,7 +84,7 @@ public partial class GameDatabaseContext // Notifications
             AnnouncementId = ObjectId.GenerateNewId(),
             Title = title,
             Text = text,
-            CreatedAt = this._time.Now,
+            CreatedAt = this._time.GetUtcNow(),
         };
         
         this._realm.Write(() =>

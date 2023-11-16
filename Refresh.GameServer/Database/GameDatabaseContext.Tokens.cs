@@ -46,8 +46,8 @@ public partial class GameDatabaseContext // Tokens
             TokenType = type,
             TokenGame = game,
             TokenPlatform = platform,
-            ExpiresAt = this._time.Now.AddSeconds(tokenExpirySeconds),
-            LoginDate = this._time.Now,
+            ExpiresAt = this._time.GetUtcNow().AddSeconds(tokenExpirySeconds),
+            LoginDate = this._time.GetUtcNow(),
         };
         
         if (user.LastLoginDate == DateTimeOffset.MinValue)
@@ -57,7 +57,7 @@ public partial class GameDatabaseContext // Tokens
 
         this._realm.Write(() =>
         {
-            user.LastLoginDate = this._time.Now;
+            user.LastLoginDate = this._time.GetUtcNow();
             this._realm.Add(token);
         });
         
@@ -74,7 +74,7 @@ public partial class GameDatabaseContext // Tokens
         if (token == null) return null;
 
         // ReSharper disable once InvertIf
-        if (token.ExpiresAt < this._time.Now)
+        if (token.ExpiresAt < this._time.GetUtcNow())
         {
             this.RevokeToken(token);
             return null;
@@ -130,7 +130,7 @@ public partial class GameDatabaseContext // Tokens
         GameIpVerificationRequest request = new()
         {
             IpAddress = ipAddress,
-            CreatedAt = this._time.Now,
+            CreatedAt = this._time.GetUtcNow(),
         };
 
         this._realm.Write(() =>

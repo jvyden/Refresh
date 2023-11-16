@@ -6,7 +6,6 @@ using Bunkum.Protocols.Http;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Extensions;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Levels;
 using Refresh.GameServer.Types.Photos;
 using Refresh.GameServer.Types.Report;
@@ -17,7 +16,7 @@ namespace Refresh.GameServer.Endpoints.Game;
 public class ReportingEndpoints : EndpointGroup 
 {
     [GameEndpoint("grief", HttpMethods.Post, ContentType.Xml)]
-    public Response UploadReport(RequestContext context, GameDatabaseContext database, GameReport body, GameUser user, IDateTimeProvider time, Token token)
+    public Response UploadReport(RequestContext context, GameDatabaseContext database, GameReport body, GameUser user, TimeProvider time, Token token)
     {
         GameLevel? level = database.GetLevelById(body.LevelId);
 
@@ -64,7 +63,7 @@ public class ReportingEndpoints : EndpointGroup
             
             database.UploadPhoto(new SerializedPhoto
             {
-                Timestamp = time.TimestampSeconds,
+                Timestamp = time.GetUtcNow().ToUnixTimeSeconds(),
                 AuthorName = user.Username,
                 SmallHash = hash,
                 MediumHash = hash,

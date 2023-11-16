@@ -24,8 +24,8 @@ public partial class GameDatabaseContext // Photos
             //If level is null, default to level ID 0
             LevelId = photo.Level?.LevelId ?? 0,
 
-            TakenAt = DateTimeOffset.FromUnixTimeSeconds(Math.Clamp(photo.Timestamp, EarliestDate.ToUnixTimeSeconds(), this._time.TimestampSeconds)),
-            PublishedAt = this._time.Now,
+            TakenAt = DateTimeOffset.FromUnixTimeSeconds(Math.Clamp(photo.Timestamp, EarliestDate.ToUnixTimeSeconds(), this._time.GetUtcNow().ToUnixTimeSeconds())),
+            PublishedAt = this._time.GetUtcNow(),
         };
 
         if (photo.Level?.Type == "user") 

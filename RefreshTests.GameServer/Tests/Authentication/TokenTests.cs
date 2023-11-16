@@ -16,9 +16,9 @@ public class TokenTests : GameServerTest
         Token token = context.Database.GenerateTokenForUser(user, TokenType.Api, TokenGame.Website, TokenPlatform.Website, expirySeconds);
         
         Assert.That(context.Database.GetTokenFromTokenData(token.TokenData, TokenType.Api), Is.Not.Null);
-        context.Time.TimestampMilliseconds = expirySeconds * 1000;
+        context.Time.Advance(TimeSpan.FromSeconds(expirySeconds));
         Assert.That(context.Database.GetTokenFromTokenData(token.TokenData, TokenType.Api), Is.Not.Null);
-        context.Time.TimestampMilliseconds++;
+        context.Time.Advance(TimeSpan.FromSeconds(1));
         Assert.That(context.Database.GetTokenFromTokenData(token.TokenData, TokenType.Api), Is.Null);
     }
 

@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Realms;
 using Bunkum.RealmDatabase;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types;
 
 namespace Refresh.GameServer.Database;
@@ -11,9 +10,9 @@ public partial class GameDatabaseContext : RealmDatabaseContext
 {
     private static readonly object IdLock = new();
 
-    private readonly IDateTimeProvider _time;
+    private readonly TimeProvider _time;
 
-    internal GameDatabaseContext(IDateTimeProvider time)
+    internal GameDatabaseContext(TimeProvider time)
     {
         this._time = time;
     }

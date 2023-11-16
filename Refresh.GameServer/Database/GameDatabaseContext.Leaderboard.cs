@@ -17,7 +17,7 @@ public partial class GameDatabaseContext // Leaderboard
             ScoreType = score.ScoreType,
             Level = level,
             Players = { user },
-            ScoreSubmitted = this._time.Now,
+            ScoreSubmitted = this._time.GetUtcNow(),
             Game = game,
         };
 

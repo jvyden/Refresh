@@ -192,7 +192,7 @@ public partial class GameDatabaseContext // Relations
                 Level = level,
                 User = user,
                 RatingType = type,
-                Timestamp = this._time.Now,
+                Timestamp = this._time.GetUtcNow(),
             };
 
             this._realm.Write(() => this._realm.Add(rating));
@@ -202,7 +202,7 @@ public partial class GameDatabaseContext // Relations
         this._realm.Write(() =>
         {
             rating.RatingType = type;
-            rating.Timestamp = this._time.Now;
+            rating.Timestamp = this._time.GetUtcNow();
         });
         return true;
     }
@@ -217,7 +217,7 @@ public partial class GameDatabaseContext // Relations
         {
             Level = level,
             User = user,
-            Timestamp = this._time.TimestampMilliseconds,
+            Timestamp = this._time.GetUtcNow().ToUnixTimeMilliseconds(),
             Count = count,
         };
         
@@ -233,7 +233,7 @@ public partial class GameDatabaseContext // Relations
             {
                 Level = level,
                 User = user,
-                Timestamp = this._time.TimestampMilliseconds,
+                Timestamp = this._time.GetUtcNow().ToUnixTimeMilliseconds(),
             });
         });
 

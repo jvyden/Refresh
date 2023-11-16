@@ -12,7 +12,7 @@ public partial class GameDatabaseContext // Comments
         {
             Author = author,
             Content = content,
-            Timestamp = this._time.TimestampMilliseconds,
+            Timestamp = this._time.GetUtcNow().ToUnixTimeMilliseconds(),
         };
         
         this.AddSequentialObject(comment, profile.ProfileComments);
@@ -40,7 +40,7 @@ public partial class GameDatabaseContext // Comments
             {
                 Author = author,
                 Content = content,
-                Timestamp = this._time.TimestampMilliseconds,
+                Timestamp = this._time.GetUtcNow().ToUnixTimeMilliseconds(),
             };
             
             this.AddSequentialObject(comment, level.LevelComments);

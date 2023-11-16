@@ -117,7 +117,7 @@ public partial class GameDatabaseContext // Users
     [Pure]
     public int GetActiveUserCount()
     {
-        DateTimeOffset lastMonth = this._time.Now.Subtract(TimeSpan.FromDays(30));
+        DateTimeOffset lastMonth = this._time.GetUtcNow().Subtract(TimeSpan.FromDays(30));
         return this._realm.All<GameUser>().Count(u => u.LastLoginDate > lastMonth);
     }
 
@@ -171,7 +171,7 @@ public partial class GameDatabaseContext // Users
         if (user.Role != role) return false;
         if (user.BanExpiryDate == null) return false;
         
-        return user.BanExpiryDate >= this._time.Now;
+        return user.BanExpiryDate >= this._time.GetUtcNow();
     }
 
     public bool IsUserBanned(GameUser user) => this.IsUserPunished(user, GameUserRole.Banned);

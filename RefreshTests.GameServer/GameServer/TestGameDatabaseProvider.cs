@@ -1,11 +1,11 @@
+using Microsoft.Extensions.Time.Testing;
 using Refresh.GameServer.Database;
-using RefreshTests.GameServer.Time;
 
 namespace RefreshTests.GameServer.GameServer;
 
 public class TestGameDatabaseProvider : GameDatabaseProvider
 {
-    public TestGameDatabaseProvider(MockDateTimeProvider time) : base(time)
+    public TestGameDatabaseProvider(FakeTimeProvider time) : base(time)
     {}
 
     private readonly int _databaseId = Random.Shared.Next();

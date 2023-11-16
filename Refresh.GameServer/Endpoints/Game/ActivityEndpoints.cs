@@ -2,19 +2,15 @@ using System.Xml;
 using System.Xml.Serialization;
 using Bunkum.Core;
 using Bunkum.Core.Endpoints;
-using Bunkum.Core.Endpoints.Debugging;
 using Bunkum.Core.Responses;
 using Bunkum.Listener.Protocol;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Endpoints.Game.Levels.FilterSettings;
-using Refresh.GameServer.Extensions;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Activity;
 using Refresh.GameServer.Types.Levels;
 using Refresh.GameServer.Types.News;
 using Refresh.GameServer.Types.Roles;
-using Refresh.GameServer.Types.UserData;
 
 namespace Refresh.GameServer.Endpoints.Game;
 
@@ -42,7 +38,7 @@ public class ActivityEndpoints : EndpointGroup
     [GameEndpoint("news", ContentType.Xml)]
     [Authentication(false)]
     [MinimumRole(GameUserRole.Restricted)]
-    public Response GetNews(RequestContext context, GameDatabaseContext database, IDateTimeProvider time, Token? token)
+    public Response GetNews(RequestContext context, GameDatabaseContext database, TimeProvider time, Token? token)
     {
         List<GameNewsItem> items = new();
 
@@ -85,7 +81,7 @@ public class ActivityEndpoints : EndpointGroup
                     Id = i,
                     Subject = "Team Pick",
                     Content = doc.DocumentElement!.InnerXml,
-                    Timestamp = time.TimestampSeconds,
+                    Timestamp = time.GetUtcNow().ToUnixTimeSeconds(),
                 });
 
                 i++;

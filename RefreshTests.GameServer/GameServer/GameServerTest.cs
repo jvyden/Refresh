@@ -1,8 +1,8 @@
 using Bunkum.Core.Storage;
 using Bunkum.Protocols.Http.Direct;
+using Microsoft.Extensions.Time.Testing;
 using NotEnoughLogs;
 using RefreshTests.GameServer.Logging;
-using RefreshTests.GameServer.Time;
 
 namespace RefreshTests.GameServer.GameServer;
 
@@ -20,7 +20,7 @@ public class GameServerTest
     {
         DirectHttpListener listener = new(Logger);
         HttpClient client = listener.GetClient();
-        MockDateTimeProvider time = new();
+        FakeTimeProvider time = new();
 
         TestGameDatabaseProvider provider = new(time);
 

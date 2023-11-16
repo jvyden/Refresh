@@ -21,7 +21,6 @@ using Refresh.GameServer.Endpoints;
 using Refresh.GameServer.Importing;
 using Refresh.GameServer.Middlewares;
 using Refresh.GameServer.Services;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Levels.Categories;
 using Refresh.GameServer.Types.Roles;
 using Refresh.GameServer.Types.UserData;
@@ -191,9 +190,9 @@ public class RefreshGameServer : IDisposable
         return this._databaseProvider.GetContext();
     }
     
-    protected virtual IDateTimeProvider GetTimeProvider()
+    protected virtual TimeProvider GetTimeProvider()
     {
-        return new SystemDateTimeProvider();
+        return TimeProvider.System;
     }
     
     protected virtual (LoggerConfiguration logConfig, List<ILoggerSink>? sinks) GetLoggerConfiguration()

@@ -4,6 +4,7 @@ using Bunkum.Core.Services;
 using Bunkum.Core.Storage;
 using Bunkum.Protocols.Http;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Time.Testing;
 using NotEnoughLogs;
 using NotEnoughLogs.Behaviour;
 using NotEnoughLogs.Sinks;
@@ -11,10 +12,8 @@ using Refresh.GameServer;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Services;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Levels.Categories;
 using RefreshTests.GameServer.Logging;
-using RefreshTests.GameServer.Time;
 
 namespace RefreshTests.GameServer.GameServer;
 
@@ -38,9 +37,9 @@ public class TestRefreshGameServer : RefreshGameServer
         // this._workerManager.Start();
     }
 
-    public IDateTimeProvider DateTimeProvider { get; set; } = new MockDateTimeProvider();
+    public TimeProvider DateTimeProvider { get; set; } = new FakeTimeProvider();
     
-    protected override IDateTimeProvider GetTimeProvider() => this.DateTimeProvider;
+    protected override TimeProvider GetTimeProvider() => this.DateTimeProvider;
 
     protected override (LoggerConfiguration logConfig, List<ILoggerSink>? sinks) GetLoggerConfiguration()
     {

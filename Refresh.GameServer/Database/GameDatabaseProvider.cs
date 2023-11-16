@@ -5,7 +5,6 @@ using Refresh.GameServer.Types.Comments;
 using Refresh.GameServer.Types.Levels;
 using Refresh.GameServer.Types.UserData;
 using Bunkum.RealmDatabase;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Activity;
 using Refresh.GameServer.Types.Assets;
 using Refresh.GameServer.Types.Levels.SkillRewards;
@@ -20,14 +19,14 @@ namespace Refresh.GameServer.Database;
 
 public class GameDatabaseProvider : RealmDatabaseProvider<GameDatabaseContext>
 {
-    private readonly IDateTimeProvider _time;
+    private readonly TimeProvider _time;
     
     public GameDatabaseProvider()
     {
-        this._time = new SystemDateTimeProvider();
+        this._time = TimeProvider.System;
     }
 
-    protected GameDatabaseProvider(IDateTimeProvider time)
+    protected GameDatabaseProvider(TimeProvider time)
     {
         this._time = time;
     }
@@ -88,12 +87,12 @@ public class GameDatabaseProvider : RealmDatabaseProvider<GameDatabaseContext>
     protected override void Migrate(Migration migration, ulong oldVersion)
     {
         // Get the current unix timestamp for when we add timestamps to objects
-        long timestampMilliseconds = this._time.TimestampMilliseconds;
+        long timestampMilliseconds = this._time.GetUtcNow().ToUnixTimeMilliseconds();
 
         // DO NOT USE FOR NEW MIGRATIONS! LBP almost never actually uses seconds for timestamps.
         // This is from a mistake made early in development where this was not understood by me.
         // Unless you are certain second timestamps are used, use the millisecond timestamps set above.
-        long timestampSeconds = this._time.TimestampSeconds;
+        long timestampSeconds = this._time.GetUtcNow().ToUnixTimeSeconds();
 
         IQueryable<dynamic>? oldUsers = migration.OldRealm.DynamicApi.All("GameUser");
         IQueryable<GameUser>? newUsers = migration.NewRealm.All<GameUser>();

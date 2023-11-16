@@ -37,7 +37,7 @@ public class PunishmentExpiryTests : GameServerTest
             Assert.That(user.Role, Is.EqualTo(Banned));
         });
 
-        context.Time.TimestampMilliseconds = 2000;
+        context.Time.Advance(TimeSpan.FromSeconds(2));
         didWork = worker.DoWork(logger, null!, context.Database);
         
         Assert.Multiple(() =>
@@ -68,7 +68,7 @@ public class PunishmentExpiryTests : GameServerTest
             Assert.That(user.Role, Is.EqualTo(Restricted));
         });
 
-        context.Time.TimestampMilliseconds = 2000;
+        context.Time.Advance(TimeSpan.FromSeconds(2));
         didWork = worker.DoWork(logger, null!, context.Database);
         
         Assert.Multiple(() =>

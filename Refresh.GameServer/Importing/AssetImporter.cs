@@ -4,18 +4,17 @@ using JetBrains.Annotations;
 using NotEnoughLogs;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Database;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Assets;
 
 namespace Refresh.GameServer.Importing;
 
 public class AssetImporter : Importer
 {
-    private readonly IDateTimeProvider _timeProvider;
+    private readonly TimeProvider _timeProvider;
     
-    public AssetImporter(Logger? logger = null, IDateTimeProvider? timeProvider = null) : base(logger)
+    public AssetImporter(Logger? logger = null, TimeProvider? timeProvider = null) : base(logger)
     {
-        timeProvider ??= new SystemDateTimeProvider();
+        timeProvider ??= TimeProvider.System;
         this._timeProvider = timeProvider;
     }
 
@@ -97,7 +96,7 @@ public class AssetImporter : Importer
 
         GameAsset asset = new()
         {
-            UploadDate = this._timeProvider.Now,
+            UploadDate = this._timeProvider.GetUtcNow(),
             OriginalUploader = null,
             AssetHash = hash,
             AssetType = this.DetermineAssetType(data, platform),

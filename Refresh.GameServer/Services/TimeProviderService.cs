@@ -3,22 +3,21 @@ using Bunkum.Listener.Request;
 using Bunkum.Core.Database;
 using Bunkum.Core.Services;
 using NotEnoughLogs;
-using Refresh.GameServer.Time;
 
 namespace Refresh.GameServer.Services;
 
 public class TimeProviderService : Service
 {
-    public IDateTimeProvider TimeProvider { get; }
+    public TimeProvider TimeProvider { get; }
 
-    internal TimeProviderService(Logger logger, IDateTimeProvider timeProvider) : base(logger)
+    internal TimeProviderService(Logger logger, TimeProvider timeProvider) : base(logger)
     {
         this.TimeProvider = timeProvider;
     }
 
     public override object? AddParameterToEndpoint(ListenerContext context, ParameterInfo paramInfo, Lazy<IDatabaseContext> database)
     {
-        if (paramInfo.ParameterType == typeof(IDateTimeProvider))
+        if (paramInfo.ParameterType == typeof(TimeProvider))
         {
             return this.TimeProvider;
         }

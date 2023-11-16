@@ -22,7 +22,7 @@ public class EditApiTests : GameServerTest
             Title = "Updated",
         };
 
-        context.Time.TimestampMilliseconds = 1;
+        context.Time.Advance(TimeSpan.FromMilliseconds(1));
         
         using HttpClient client = context.GetAuthenticatedClient(TokenType.Api, user);
         HttpResponseMessage response = client.PatchAsync($"/api/v3/levels/id/{level.LevelId}", JsonContent.Create(payload)).Result;
@@ -33,7 +33,7 @@ public class EditApiTests : GameServerTest
         {
             Assert.That(level.Title, Is.EqualTo("Updated"));
             Assert.That(level.UpdateDate, Is.Not.EqualTo(oldUpdate));
-            Assert.That(level.UpdateDate, Is.EqualTo(context.Time.TimestampMilliseconds));
+            Assert.That(level.UpdateDate, Is.EqualTo(context.Time.GetUtcNow().ToUnixTimeMilliseconds()));
         });
     }
     

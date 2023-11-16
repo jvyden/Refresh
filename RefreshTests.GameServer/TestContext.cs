@@ -1,13 +1,13 @@
 using Bunkum.Core.Services;
 using Bunkum.Protocols.Http.Direct;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Time.Testing;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Types;
 using Refresh.GameServer.Types.Levels;
 using Refresh.GameServer.Types.UserData;
 using Refresh.GameServer.Types.UserData.Leaderboard;
-using RefreshTests.GameServer.Time;
 
 namespace RefreshTests.GameServer;
 
@@ -16,10 +16,10 @@ public class TestContext : IDisposable
     public Lazy<TestRefreshGameServer> Server { get; }
     public GameDatabaseContext Database { get; }
     public HttpClient Http { get; }
-    public MockDateTimeProvider Time { get; }
+    public FakeTimeProvider Time { get; }
     private DirectHttpListener Listener { get; }
     
-    public TestContext(Lazy<TestRefreshGameServer> server, GameDatabaseContext database, HttpClient http, DirectHttpListener listener, MockDateTimeProvider time)
+    public TestContext(Lazy<TestRefreshGameServer> server, GameDatabaseContext database, HttpClient http, DirectHttpListener listener, FakeTimeProvider time)
     {
         this.Server = server;
         this.Database = database;

@@ -11,7 +11,6 @@ using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Extensions;
 using Refresh.GameServer.Importing;
-using Refresh.GameServer.Time;
 using Refresh.GameServer.Types.Assets;
 using Refresh.GameServer.Types.Lists;
 using Refresh.GameServer.Types.Roles;
@@ -27,7 +26,7 @@ public class ResourceEndpoints : EndpointGroup
     [GameEndpoint("upload/{hash}", HttpMethods.Post)]
     [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]
     public Response UploadAsset(RequestContext context, string hash, string type, byte[] body, IDataStore dataStore,
-        GameDatabaseContext database, GameUser user, AssetImporter importer, GameServerConfig config, IDateTimeProvider timeProvider, Token token)
+        GameDatabaseContext database, GameUser user, AssetImporter importer, GameServerConfig config, TimeProvider timeProvider, Token token)
     {
         if (!CommonPatterns.Sha1Regex().IsMatch(hash)) return BadRequest;
         
