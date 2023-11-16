@@ -18,6 +18,8 @@ public partial class GameDatabaseContext : RealmDatabaseContext
         this._time = time;
     }
 
+    private static readonly DateTimeOffset EarliestDate = new(2007, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
     private int GetOrCreateSequentialId<T>() where T : IRealmObject, ISequentialId
     {
         string name = typeof(T).Name;
