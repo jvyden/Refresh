@@ -194,6 +194,7 @@ public partial class GameDatabaseContext // Tokens
                     user.ConnectedGames.PlatformPSP = true;
                     break;
                 case TokenPlatform.Website:
+                    return;
                 default:
                     throw new InvalidOperationException($"Cannot set connected game for invalid platform {platform}");
             }
@@ -219,6 +220,7 @@ public partial class GameDatabaseContext // Tokens
                     user.ConnectedGames.GameBeta = true;
                     break;
                 case TokenGame.Website:
+                    return;
                 default:
                     throw new InvalidOperationException($"Cannot set connected game for invalid game {game}");
             }
