@@ -120,6 +120,8 @@ public partial class GameUser : IRealmObject, IRateLimitUser
     // ReSharper disable once InconsistentNaming
     internal byte _Role { get; set; }
 
+    public GameUserConnectedGames ConnectedGames { get; set; } = null!;
+
     public override string ToString() => $"{this.Username} ({this.UserId})";
 
     #region Rate-limiting

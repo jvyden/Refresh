@@ -27,6 +27,7 @@ public partial class GameDatabaseContext // Registration
             EmailAddress = emailAddress,
             EmailAddressVerified = false,
             JoinDate = this._time.Now,
+            ConnectedGames = new GameUserConnectedGames(),
         };
 
         this._realm.Write(() =>

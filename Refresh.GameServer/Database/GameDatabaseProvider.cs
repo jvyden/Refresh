@@ -33,7 +33,7 @@ public class GameDatabaseProvider : RealmDatabaseProvider<GameDatabaseContext>
         this._time = time;
     }
 
-    protected override ulong SchemaVersion => 118;
+    protected override ulong SchemaVersion => 119;
 
     protected override string Filename => "refreshGameServer.realm";
     
@@ -74,7 +74,8 @@ public class GameDatabaseProvider : RealmDatabaseProvider<GameDatabaseContext>
         typeof(ScreenRect),
         typeof(Slot),
         typeof(GameReview),
-        typeof(DisallowedUser)
+        typeof(DisallowedUser),
+        typeof(GameUserConnectedGames),
     };
 
     public override void Warmup()
@@ -183,6 +184,9 @@ public class GameDatabaseProvider : RealmDatabaseProvider<GameDatabaseContext>
                     .Where(a => a.OriginalUploader?.UserId == newUser.UserId)
                     .Sum(a => a.SizeInBytes);
             }
+
+            // In version 119, we begun tracking the different platforms and games a user has connected to.
+            if (oldVersion < 119) newUser.ConnectedGames = new GameUserConnectedGames();
         }
 
         IQueryable<dynamic>? oldLevels = migration.OldRealm.DynamicApi.All("GameLevel");

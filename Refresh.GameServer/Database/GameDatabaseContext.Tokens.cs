@@ -55,6 +55,11 @@ public partial class GameDatabaseContext // Tokens
             this.CreateUserFirstLoginEvent(user, user);
         }
 
+        if (type == TokenType.Game)
+        {
+            this.UpdateConnectedGames(user, game, platform);
+        }
+
         this._realm.Write(() =>
         {
             user.LastLoginDate = this._time.Now;
@@ -162,4 +167,61 @@ public partial class GameDatabaseContext // Tokens
 
     public DatabaseList<GameIpVerificationRequest> GetIpVerificationRequestsForUser(GameUser user, int count, int skip) 
         => new(user.IpVerificationRequests, skip, count);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user">The user's connected games to fill in.</param>
+    /// <param name="game">The game the user is playing.</param>
+    /// <param name="platform">The platform the user is connecting from.</param>
+    /// <exception cref="InvalidOperationException">The game or platform is invalid.</exception>
+    private void UpdateConnectedGames(GameUser user, TokenGame game, TokenPlatform platform)
+    {
+        this._realm.Write(() =>
+        {
+            switch (platform)
+            {
+                case TokenPlatform.PS3:
+                    user.ConnectedGames.PlatformPS3 = true;
+                    break;
+                case TokenPlatform.RPCS3:
+                    user.ConnectedGames.PlatformRPCS3 = true;
+                    break;
+                case TokenPlatform.Vita:
+                    user.ConnectedGames.PlatformVita = true;
+                    break;
+                case TokenPlatform.PSP:
+                    user.ConnectedGames.PlatformPSP = true;
+                    break;
+                case TokenPlatform.Website:
+                default:
+                    throw new InvalidOperationException($"Cannot set connected game for invalid platform {platform}");
+            }
+
+            switch (game)
+            {
+                case TokenGame.LittleBigPlanet1:
+                    user.ConnectedGames.GameLBP1 = true;
+                    break;
+                case TokenGame.LittleBigPlanet2:
+                    user.ConnectedGames.GameLBP2 = true;
+                    break;
+                case TokenGame.LittleBigPlanet3:
+                    user.ConnectedGames.GameLBP3 = true;
+                    break;
+                case TokenGame.LittleBigPlanetVita:
+                    user.ConnectedGames.GameVita = true;
+                    break;
+                case TokenGame.LittleBigPlanetPSP:
+                    user.ConnectedGames.GamePSP = true;
+                    break;
+                case TokenGame.BetaBuild:
+                    user.ConnectedGames.GameBeta = true;
+                    break;
+                case TokenGame.Website:
+                default:
+                    throw new InvalidOperationException($"Cannot set connected game for invalid game {game}");
+            }
+        });
+    }
 }

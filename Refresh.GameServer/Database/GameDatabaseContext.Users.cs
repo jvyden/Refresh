@@ -264,6 +264,7 @@ public partial class GameDatabaseContext // Users
         {
             user.Pins = new UserPins();
             user.Location = new GameLocation();
+            user.ConnectedGames = new GameUserConnectedGames();
             user.Description = deletedReason;
             user.EmailAddress = null;
             user.PasswordBcrypt = "deleted";
