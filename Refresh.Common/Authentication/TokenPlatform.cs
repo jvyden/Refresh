@@ -1,4 +1,4 @@
-namespace Refresh.GameServer.Authentication;
+﻿namespace Refresh.Common.Authentication;
 
 public enum TokenPlatform
 {
