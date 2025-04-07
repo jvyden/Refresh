@@ -5,6 +5,7 @@ using NotEnoughLogs;
 using System.Reflection;
 using Bunkum.Core.Responses;
 using Bunkum.Listener.Protocol;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Types.Data;

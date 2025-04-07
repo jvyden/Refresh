@@ -1,5 +1,5 @@
 using MongoDB.Bson;
 
-namespace Refresh.GameServer.Types.Matching;
+namespace Refresh.Common.Rooms;
 
 public record GameRoomPlayer(string Username, ObjectId? Id);

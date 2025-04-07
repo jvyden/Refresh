@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using Newtonsoft.Json.Converters;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Types.UserData;

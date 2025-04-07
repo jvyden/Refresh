@@ -2,6 +2,7 @@ using Bunkum.Core;
 using Bunkum.Core.Responses;
 using Bunkum.Listener.Protocol;
 using MongoDB.Bson;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Types.Data;

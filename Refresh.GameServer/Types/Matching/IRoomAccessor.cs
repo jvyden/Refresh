@@ -1,4 +1,5 @@
 using MongoDB.Bson;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Types.Levels;
 using Refresh.GameServer.Types.UserData;

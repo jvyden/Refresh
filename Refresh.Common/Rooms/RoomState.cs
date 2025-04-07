@@ -1,4 +1,4 @@
-namespace Refresh.GameServer.Types.Matching;
+namespace Refresh.Common.Rooms;
 
 public enum RoomState
 {

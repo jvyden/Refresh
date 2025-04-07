@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Refresh.Common.Rooms;
 
 namespace Refresh.GameServer.Types.Matching;
 

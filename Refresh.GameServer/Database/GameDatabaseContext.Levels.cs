@@ -3,6 +3,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Realms;
 using Refresh.Common.Constants;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Endpoints.ApiV3.DataTypes.Request;
 using Refresh.GameServer.Endpoints.Game.Levels.FilterSettings;

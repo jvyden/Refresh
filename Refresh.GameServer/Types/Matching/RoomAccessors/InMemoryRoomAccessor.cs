@@ -1,6 +1,7 @@
 using Bunkum.Core;
 using MongoDB.Bson;
 using NotEnoughLogs;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 
 namespace Refresh.GameServer.Types.Matching.RoomAccessors;

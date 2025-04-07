@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using Bunkum.Core.Responses;
 using Newtonsoft.Json;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Services;
 using Refresh.GameServer.Types.Data;

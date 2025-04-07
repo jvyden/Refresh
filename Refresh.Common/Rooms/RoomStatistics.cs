@@ -1,6 +1,8 @@
-using Refresh.GameServer.Authentication;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Refresh.Common.Authentication;
 
-namespace Refresh.GameServer.Types.Matching;
+namespace Refresh.Common.Rooms;
 
 #nullable disable
 

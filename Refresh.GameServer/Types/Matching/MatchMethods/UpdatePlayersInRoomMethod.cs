@@ -1,4 +1,5 @@
 using Bunkum.Core.Responses;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Types.Data;
 using Refresh.GameServer.Types.UserData;
