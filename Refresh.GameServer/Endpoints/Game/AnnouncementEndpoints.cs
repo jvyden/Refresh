@@ -5,6 +5,7 @@ using Bunkum.Core;
 using Bunkum.Core.Endpoints;
 using Bunkum.Core.Responses.Serialization;
 using Bunkum.Listener.Protocol;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Configuration;
 using Refresh.GameServer.Database;

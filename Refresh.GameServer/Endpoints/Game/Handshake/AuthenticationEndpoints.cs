@@ -9,6 +9,7 @@ using Bunkum.Protocols.Http;
 using NPTicket;
 using NPTicket.Verification;
 using NPTicket.Verification.Keys;
+using Refresh.Common.Rooms;
 using Refresh.Common.Verification;
 using Refresh.GameServer.Authentication;
 using Refresh.GameServer.Configuration;

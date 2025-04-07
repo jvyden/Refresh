@@ -2,6 +2,7 @@ using AttribDoc.Attributes;
 using Bunkum.Core;
 using Bunkum.Core.Endpoints;
 using MongoDB.Bson;
+using Refresh.Common.Rooms;
 using Refresh.GameServer.Database;
 using Refresh.GameServer.Documentation.Attributes;
 using Refresh.GameServer.Endpoints.ApiV3.ApiTypes;

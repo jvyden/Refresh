@@ -1,17 +1,15 @@
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Refresh.Common.Rooms;
-using Refresh.GameServer.Authentication;
-using Refresh.GameServer.Database;
-using Refresh.GameServer.Types.UserData;
+using Refresh.Common.Authentication;
 
-namespace Refresh.GameServer.Types.Matching;
+namespace Refresh.Common.Rooms;
 
 public class GameRoom
 {
-    public GameRoom(GameUser host, TokenPlatform platform, TokenGame game, NatType natType, bool? passedNoJoinPoint)
+    public GameRoom(GameRoomPlayer host, TokenPlatform platform, TokenGame game, NatType natType, bool? passedNoJoinPoint)
     {
-        this.PlayerIds.Add(new GameRoomPlayer(host.Username, host.UserId));
+        this.PlayerIds.Add(host);
         this.Platform = platform;
         this.Game = game;
         this.NatType = natType;
@@ -31,18 +29,6 @@ public class GameRoom
     public DateTimeOffset LastContact;
 
     public bool PassedNoJoinPoint;
-
-    public List<GameUser?> GetPlayers(GameDatabaseContext database) =>
-        this.PlayerIds
-            .Where(i => i.Id != null)
-            .Select(i => database.GetUserByObjectId(i.Id))
-            .ToList();
-
-    public GameUser? GetHost(GameDatabaseContext database)
-    {
-        if (this.PlayerIds[0].Id == null) return null;
-        return database.GetUserByObjectId(this.PlayerIds[0].Id);
-    }
 
     public bool IsExpired => DateTimeOffset.Now > this.LastContact + TimeSpan.FromMinutes(3) || this.PlayerIds.Count == 0;
 

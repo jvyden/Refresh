@@ -46,7 +46,7 @@ public partial class MatchService(Logger logger) : EndpointService(logger)
         NatType natType,
         bool? passedNoJoinPoint = null)
     {
-        GameRoom room = new(player, platform, game, natType, passedNoJoinPoint);
+        GameRoom room = new(new GameRoomPlayer(player.Username, player.UserId), platform, game, natType, passedNoJoinPoint);
         this.RoomAccessor.AddRoom(room);
         return room;
     }
