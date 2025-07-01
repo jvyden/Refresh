@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using Refresh.Database.Models.Assets;
 using Refresh.Database.Models.Users;
 using Refresh.Database.Models.Relations;
@@ -54,18 +55,29 @@ public partial class GameDatabaseContext // Assets
 
     public void AddOrOverwriteAssetDependencyRelations(string dependent, IEnumerable<string> dependencies)
     {
-        this.Write(() =>
+        using IDbContextTransaction transaction = this.Database.BeginTransaction();
+
+        // delete all existing relations. ensures duplicates won't exist when reprocessing
+        this.Database.ExecuteSql($"DELETE FROM \"AssetDependencyRelations\" WHERE \"Dependent\" = {dependent}");
+
+        try
         {
-            // delete all existing relations. ensures duplicates won't exist when reprocessing
-            this.AssetDependencyRelations.RemoveRange(a => a.Dependent == dependent);
-            
             foreach (string dependency in dependencies)
-                this.AssetDependencyRelations.Add(new AssetDependencyRelation
-                {
-                    Dependent = dependent,
-                    Dependency = dependency,
-                });
-        });
+            {
+                this.Database.ExecuteSql(
+                    $"INSERT INTO \"AssetDependencyRelations\" (\"Dependency\", \"Dependent\") VALUES ({dependency}, {dependent}) ON CONFLICT DO NOTHING");
+            }
+
+            transaction.Commit();
+        }
+        catch (Exception e)
+        {
+            // FIXME: should move RefreshContext to Refresh.Common
+            this._logger.LogError("Database", e.ToString());
+            throw;
+        }
+
+        this.SaveChanges();
     }
     
     public IEnumerable<GameAsset> GetAssetsByType(GameAssetType type) =>

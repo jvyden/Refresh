@@ -126,6 +126,10 @@ public class AssetImporter : Importer
             {
                 this.Warn($"Could not parse dependency tree for {hash}: {e}");
             }
+            finally
+            {
+                database.ChangeTracker.Clear();
+            }
         }
 
         return asset;
