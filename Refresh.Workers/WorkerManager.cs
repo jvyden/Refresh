@@ -60,10 +60,12 @@ public class WorkerManager
             if (jobWithState != null)
             {
                 object? jobState = context.Database.GetJobState(jobWithState.JobId, jobWithState.JobStateType, jobWithState.JobClass);
-                jobState ??= Activator.CreateInstance(jobWithState.JobStateType);
+
+                if (jobState == null && jobWithState.AutomaticallySetupState)
+                    jobState = Activator.CreateInstance(jobWithState.JobStateType);
 
                 jobWithState.JobState = jobState!;
-                
+
                 // jobs that consume state may have different execution requirements when state is updated
                 // check again to handle this case. the check above is still retained to avoid unnecessary db lookups
                 if (!job.CanExecute())
@@ -83,7 +85,7 @@ public class WorkerManager
             }
 
             if (jobWithState != null)
-                context.Database.UpdateOrCreateJobState(jobWithState.JobId, jobWithState.JobState, jobWithState.JobClass);
+                context.Database.UpdateOrCreateJobState(jobWithState.JobId, jobWithState.JobState!, jobWithState.JobClass);
         }
         
         long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();

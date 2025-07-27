@@ -9,5 +9,5 @@ public enum WorkerClass
     /// <summary>
     /// A worker based on the CwLib codebase.
     /// </summary>
-    Craftworld,
+    CwLib,
 }

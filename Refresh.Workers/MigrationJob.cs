@@ -8,9 +8,10 @@ namespace Refresh.Workers;
 public abstract class MigrationJob<TEntity> : WorkerJob, IJobStoresState where TEntity : class
 {
     public virtual string JobId => this.GetType().Name;
-    public object JobState { get; set; } = null!;
+    public object? JobState { get; set; } = null!;
     public Type JobStateType => typeof(MigrationJobState);
     public WorkerClass JobClass => WorkerClass.Refresh;
+    public bool AutomaticallySetupState => true;
 
     public MigrationJobState? MigrationJobState => JobState as MigrationJobState;
 

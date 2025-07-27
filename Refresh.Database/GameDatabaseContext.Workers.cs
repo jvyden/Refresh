@@ -58,6 +58,7 @@ public partial class GameDatabaseContext // Workers
             jobState = new PersistentJobState
             {
                 JobId = jobId,
+                Class = workerClass,
             };
 
             this.JobStates.Add(jobState);
